@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="popup.css">
+        <title>AIMS Helper</title>
+    </head>
+    <body>
+        <div class="heading">
+            <h5>AIMS Helper</h5>
+        </div>
+        <div class="button-container">
+            <div class="button calculate-gpa">
+                Calculate GPA
+            </div>
+            <!--
+            <div class="button generate-timetable">
+                Generate Timetable
+            </div>-->
+        </div>
+        <div id="error-content" class="hidden"> 
+            The timetable could not be fetched. It maybe because you are not the correct page.
+            <p>If you are on the correct URL,please report this issue.</p>
+        </div>
+        <img src="/assets/spinner.gif" id="loading-image"/>
+        <script src="popup.js"></script>
+    </body>
+</html>

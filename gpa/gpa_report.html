@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>GPA Report</title>
+    <link rel="stylesheet" href="gpa.css">
+  </head>
+  <body>
+    <div class="report">
+      <h1>Details</h1>
+      <table class="personal">
+        <tr>
+          <td><label>Name</label></td>
+          <td><span class="value name"></span></td>
+        </tr>
+          <tr>
+            <td><label>Roll Number</label></td>
+            <td><span class="value rollno"></span></td>
+          </tr>
+          <tr>
+            <td><label>Branch</label></td>
+            <td><span class="value branch"></span></td>
+          </tr>
+          <tr>
+            <td><label>Student Type</label></td>
+            <td><span class="value student-type"></span></td>
+          </tr>
+          <tr>
+            <td><label>CGPA</label></td>
+            <td><span class="value cgpa"></span></td>
+           </tr>
+        </table>
+      <h1>Summary</h1>
+      <table class="summary">
+        <tr>
+          <th>Category</th>
+          <th class="credits">Credits</th>
+        </tr>
+      </table>
+      <h1>Selected Courses</h1>
+      <table class="courses">
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Credits</th>
+          <th>Grade</th>
+        </tr>
+      </table>
+    </div>
+    <br/>
+    <button class="download-pdf">Download PDF</button>
+    <script src="../assets/html2pdf.bundle.min.js"></script>
+    <script src="gpa_report.js">
+      
+    </script>
+  </body>
+</html>

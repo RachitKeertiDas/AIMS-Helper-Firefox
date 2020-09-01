@@ -1,0 +1,54 @@
+.heading{
+    text-align: center;
+    width: auto;
+    height: 40px;
+    color: black;
+ 	margin-bottom: 0px;
+    text-transform: uppercase;
+}
+
+.heading h5 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+html body {
+	width: 250px;
+}
+
+.button-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	height: 60px;
+}
+
+button {
+	padding-top: 3px;
+	padding-bottom: 3px;	
+    margin: 5px;
+    border: 2px black;
+}
+
+#loading-image {
+    display: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.button {
+    margin: 3% auto;
+    padding: 4px;
+    text-align: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    font-family: 'sans-serif';
+}
