@@ -19,6 +19,9 @@
 html body {
 	width: 250px;
 }
+.hidden {
+    display: none;
+}
 
 .button-container {
 	display: flex;
@@ -38,10 +41,6 @@ button {
     display: none;
     margin-left: auto;
     margin-right: auto;
-}
-
-.hidden {
-    display: none;
 }
 
 .button {

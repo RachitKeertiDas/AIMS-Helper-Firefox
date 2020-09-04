@@ -9,17 +9,18 @@ function listenforClicks() {
   function startGPAcalc(tabs) {
 	  browser.tabs.sendMessage(tabs[0].id, {
 	    command: "fetch-gpa",
-   });
+   }).catch(reportScriptError);
   }
 
  if (e.target.classList.contains("calculate-gpa")) {
-  //GPA calculation button was clicked
+  /*GPA calculation button was clicked*/
   showLoading();
   browser.tabs
    .query({ active: true, currentWindow: true})
    .then(startGPAcalc)
    .catch(reportError);
-  } else if (e.target.id === "generate-timetable") {
+  } else if (e.target.classList.contains("generate-timetable")) {
+    /*Generate Timetable button was clicked*/
     browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
      browser.tabs.sendMessage(tabs[0].id, {
          command: "fetch-timetable",
@@ -41,12 +42,26 @@ function removeLoading() {
   document.querySelectorAll(".button-container")[0].style.display =
     "flex";
 }
+
+/**
+ * Listen For Messages being transmitted by content scripts and act accordingly.
+ */
+function listenforMessages() {
+  browser.runtime.onMessage.addListener((message)=>{
+		if(message.command === "calculateGPA"){
+        browser.tabs.create({url : browser.runtime.getURL("/gpa/gpa_report.html")})
+        .then(()=>{window.close();})    
+    } else if (message.command === "injectTimetable"){
+      browser.tabs.create({url : browser.runtime.getURL("/timetable/table.html")})
+    }
+   });
+}
 /**
  * There was an error executing the script.
  * Display the popup's error message and hide the normal UI.
  */
 function reportScriptError(error) {
-  removeLoading();
+  document.querySelectorAll("#loading-image")[0].style.display = "none";
   document.querySelectorAll("#error-content")[0].classList.remove("hidden");
   document.querySelectorAll(".button-container")[0].classList.add("hidden");
   console.log(`"Error in executing content script."${error.message}`);
@@ -57,17 +72,9 @@ function reportScriptError(error) {
  * and add a click handler.
  * If we couldn't inject the script, handle the error.
  */
-listenforClicks();/*
 browser.tabs.executeScript({ file: "/content_scripts/content.js" })
   .then(listenforClicks)
   .catch(reportScriptError);
-*/
+  
 listenforMessages();
 
-function listenforMessages() {
-  browser.runtime.onMessage.addListener((message)=>{
-		if(message.command === "calculateGPA"){
-        browser.tabs.create({url : browser.runtime.getURL("/gpa/gpa_report.html")})     
-    }
-   });
-}

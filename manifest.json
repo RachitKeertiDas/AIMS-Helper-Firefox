@@ -14,12 +14,6 @@
         "default_title": "AIMS-Helper",
         "default_popup": "popup/popup.html"
     },
-    "content_scripts":[
-    	{
-    		"matches":["<all_urls>"],
-    		"js":["content_scripts/content.js"]
-    	}
-    ],
 
     "web_accessible_resources": [
         "assets/spinner.gif"

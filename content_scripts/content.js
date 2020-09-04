@@ -13,7 +13,6 @@ function mmain(){
 		console.log(window.location.href);
 		let student_data_div = document.querySelectorAll(".studentInfoDiv.inlineBlock")[0]
 		let student_name = student_data_div.childNodes[1].innerHTML;
-		//console.log(student_data_div.childNodes[5].childNodes[1].innerHTML)
 		let roll_no = student_data_div.childNodes[5].childNodes[3].innerHTML;
 		let branch = student_data_div.childNodes[9].childNodes[1].childNodes[3].innerHTML;
 		let student_type = student_data_div.childNodes[9].childNodes[3].childNodes[3].innerHTML;
@@ -46,7 +45,6 @@ function mmain(){
 				credits: course_credits,
 			}
 			//console.log("Course added");
-			//console.log(new_course);
 			courses_array.push(new_course);
 		}
 		browser.storage.local.remove('courses_data',function(){
@@ -61,22 +59,15 @@ function mmain(){
 		console.log(courses_array.length)
 	}
 
-	
+
+
 	browser.runtime.onMessage.addListener((message)=>{
 		if(message.command === "fetch-gpa"){
 			getGradesData();
-		} else if (message.command == "generate-timetable"){
+		} else if (message.command == "fetch-timetable"){
 			console.log("Not yet implemented")
+			//activateTimetable();
 		}
 	})
 
 }
-/**
- * Basic Idea:
- * Through this script:
- * 
- */
-/*
-let new_tab = browser.tabs.create();
-//new_tab.then()
-*/
