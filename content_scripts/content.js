@@ -1,7 +1,7 @@
 
-mmain();
+main();
 
-function mmain(){
+function main(){
 	/*if(window.hasRun == true)
 		return;
 	window.hasRun = true;
@@ -11,6 +11,11 @@ function mmain(){
 		let grade_container_list = document.querySelectorAll(".hierarchyLi.dataLi.tab_body_bg");
 		console.log(grade_container_list);
 		console.log(window.location.href);
+		/**
+		 * Get Student Data from the top of the document
+		 * Wrap it into an object,
+		 * store it into the extension storage
+		 */
 		let student_data_div = document.querySelectorAll(".studentInfoDiv.inlineBlock")[0]
 		let student_name = student_data_div.childNodes[1].innerHTML;
 		let roll_no = student_data_div.childNodes[5].childNodes[3].innerHTML;
@@ -47,19 +52,19 @@ function mmain(){
 			//console.log("Course added");
 			courses_array.push(new_course);
 		}
+		/**Remove any keys earlier and set new keys in extension storage */
 		browser.storage.local.remove('courses_data',function(){
-			console.log("Supposed to remove all pre-existing data")
+			
 			browser.storage.local.set({'courses_data': courses_array,'student_data': student_data},function() {
 			console.log("Course Data saved locally")
 			courses_array = [];
+			/**Content script has finished execution, call browser script for further action */
 			browser.runtime.sendMessage({"command":"calculateGPA"})
 		});
 		});
 		console.log("Adding courses successful")
 		console.log(courses_array.length)
 	}
-
-
 
 	browser.runtime.onMessage.addListener((message)=>{
 		if(message.command === "fetch-gpa"){

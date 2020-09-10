@@ -5,7 +5,10 @@ function listenforClicks() {
     function reportError(error) {
       console.error(`Could not perform desired action: $(error)`);
   }
-	
+  
+  /**
+   * Send a message to content scripts to start execution
+   */
   function startGPAcalc(tabs) {
 	  browser.tabs.sendMessage(tabs[0].id, {
 	    command: "fetch-gpa",
@@ -13,7 +16,7 @@ function listenforClicks() {
   }
 
  if (e.target.classList.contains("calculate-gpa")) {
-  /*GPA calculation button was clicked*/
+  /**GPA calculation button was clicked*/
   showLoading();
   browser.tabs
    .query({ active: true, currentWindow: true})
@@ -34,11 +37,11 @@ const grades_page_url = browser.runtime.getURL("/gpa/gpa_report.html");
 
 function showLoading() {
   document.querySelectorAll(".button-container")[0].style.display = "none";
-  document.querySelectorAll("#loading-image")[0].style.display = "block";
+  document.querySelectorAll("#loader")[0].style.display = "block";
 }
 
 function removeLoading() {
-  document.querySelectorAll("#loading-image")[0].style.display = "none";
+  document.querySelectorAll("#loader")[0].style.display = "none";
   document.querySelectorAll(".button-container")[0].style.display =
     "flex";
 }
@@ -61,7 +64,7 @@ function listenforMessages() {
  * Display the popup's error message and hide the normal UI.
  */
 function reportScriptError(error) {
-  document.querySelectorAll("#loading-image")[0].style.display = "none";
+  document.querySelectorAll("#loader")[0].style.display = "none";
   document.querySelectorAll("#error-content")[0].classList.remove("hidden");
   document.querySelectorAll(".button-container")[0].classList.add("hidden");
   console.log(`"Error in executing content script."${error.message}`);

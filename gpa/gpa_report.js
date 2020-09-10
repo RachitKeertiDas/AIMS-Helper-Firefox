@@ -35,7 +35,6 @@ browser.storage.local.get(['student_data','courses_data'],function(result){
     data.roll_no = result.student_data.roll_no;
     data.branch = result.student_data.branch;
     data.student_type = result.student_data.type;
-    console.log(data)
 
     document.getElementsByClassName("value name")[0].innerText = data.name;
     document.getElementsByClassName("value cgpa")[0].innerText = data.gpa;
@@ -46,7 +45,6 @@ browser.storage.local.get(['student_data','courses_data'],function(result){
 //now work on calculating CGPA and adding courses to last table
   let courses_array = [];
   console.log(result.courses_data.length)
-  console.log(courses_array)
   let total_credits = 0;
   let total_grade_points = 0;
   let course_data =JSON.parse(JSON.stringify(result.courses_data));
@@ -78,8 +76,6 @@ browser.storage.local.get(['student_data','courses_data'],function(result){
       }
   }
   let cgpa = total_grade_points/total_credits;
-
-  console.log(total_credits);
   console.log(cgpa);
 
   document.getElementsByClassName("value cgpa")[0].innerText = Number(cgpa.toFixed(2));
@@ -88,7 +84,6 @@ browser.storage.local.get(['student_data','courses_data'],function(result){
   let courses_type_map = new Map();
   for(let i=0;i<max_length;i++){
       let each_course = course_data[i];
-      console.log(typeof each_course.type)
       if(courses_type_map.has(each_course.type.trim())){
           let current_number = courses_type_map.get(each_course.type.trim());
           current_number+=1;
