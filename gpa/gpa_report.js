@@ -42,7 +42,6 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
 
   // now work on calculating CGPA and adding courses to last table
   const coursesArray = [];
-  console.log(result.coursesData.length);
   let totalCredits = 0;
   let totalGradePoints = 0;
   const courseData = JSON.parse(JSON.stringify(result.coursesData));
@@ -52,17 +51,17 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
     return 0;
   });
   const maxLength = courseData.length;
-  for (let i = 0; i < maxLength; i++) {
+  for (let i = 0; i < maxLength; i += 1) {
     const eachCourse = courseData[i];
     if (excludeList.includes(eachCourse.type.trim())) {
       continue;
     } else {
       if (eachCourse.grade.trim() === 'S' || eachCourse.grade.trim() === '') continue;
 
-      totalCredits += parseInt(eachCourse.credits);
+      totalCredits += parseInt(eachCourse.credits, 10);
 
       totalGradePoints
-        += gradeValues[eachCourse.grade.trim()] * parseInt(eachCourse.credits);
+        += gradeValues[eachCourse.grade.trim()] * parseInt(eachCourse.credits, 10);
       const newRow = document.createElement('tr');
       newRow.innerHTML = `<td>${eachCourse.code}</td>
           <td>${eachCourse.name}</td>
@@ -80,7 +79,7 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
   // do the credit map:= second table
 
   const coursesTypeMap = new Map();
-  for (let i = 0; i < maxLength; i++) {
+  for (let i = 0; i < maxLength; i += 1) {
     const eachCourse = courseData[i];
     if (coursesTypeMap.has(eachCourse.type.trim())) {
       let currentNumber = coursesTypeMap.get(eachCourse.type.trim());
@@ -93,7 +92,6 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
   const summaryTable = document.getElementsByClassName('summary')[0];
   for (const [type, credits] of coursesTypeMap.entries()) {
     const row = document.createElement('tr');
-    console.log(type, credits);
     totalCredits += credits;
     row.innerHTML = `<td>${type}</td><td class="credits">${credits}</td>`;
     summaryTable.appendChild(row);

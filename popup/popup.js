@@ -9,11 +9,21 @@ function reportScriptError(error) {
   console.log(`"Error in executing content script."${error.message}`);
 }
 
+function showLoading() {
+  document.querySelectorAll('.button-container')[0].style.display = 'none';
+  document.querySelectorAll('#loader')[0].style.display = 'block';
+}
+
+function removeLoading() {
+  document.querySelectorAll('#loader')[0].style.display = 'none';
+  document.querySelectorAll('.button-container')[0].style.display = 'flex';
+}
+
 function listenforClicks() {
   document.addEventListener('click', (e) => {
     /** Just log an error to the console */
     function reportError(error) {
-      console.error('Could not perform desired action: $(error)');
+      console.log(`"Could not perform desired action:" ${error}`);
     }
 
     /**
@@ -47,27 +57,15 @@ function listenforClicks() {
 
 const gradesPageUrl = browser.runtime.getURL('/gpa/gpa_report.html');
 
-function showLoading() {
-  document.querySelectorAll('.button-container')[0].style.display = 'none';
-  document.querySelectorAll('#loader')[0].style.display = 'block';
-}
-
-function removeLoading() {
-  document.querySelectorAll('#loader')[0].style.display = 'none';
-  document.querySelectorAll('.button-container')[0].style.display = 'flex';
-}
-
 /**
  * Listen For Messages being transmitted by content scripts and act accordingly.
  */
 function listenforMessages() {
   browser.runtime.onMessage.addListener((message) => {
     if (message.command === 'calculateGPA') {
-      browser.tabs
-        .create({ url: browser.runtime.getURL('/gpa/gpa_report.html') })
-        .then(() => {
-          window.close();
-        });
+      browser.tabs.create({ url: gradesPageUrl }).then(() => {
+        window.close();
+      });
     } else if (message.command === 'injectTimetable') {
       browser.tabs.create({
         url: browser.runtime.getURL('/timetable/table.html'),

@@ -1,15 +1,15 @@
 function main() {
   /* if(window.hasRun == true)
-		return;
-	window.hasRun = true;
-	*/
+   return;
+   window.hasRun = true;
+  */
   let coursesArray = [];
   function getGradesData() {
     let gradeContainerList = document.querySelectorAll(
       '.hierarchyLi.dataLi.tab_body_bg',
     );
-    console.log(gradeContainerList);
-    console.log(window.location.href);
+
+    // console.log(window.location.href);
     /**
      * Get Student Data from the top of the document
      * Wrap it into an object,
@@ -29,16 +29,13 @@ function main() {
       branch,
       type: studentType,
     };
-    console.log(studentData);
     gradeContainerList = document.querySelectorAll(
       '.hierarchyLi.dataLi.tab_body_bg',
     );
-    console.log(gradeContainerList);
 
-    for (let i = 0; i < gradeContainerList.length; i++) {
+    for (let i = 0; i < gradeContainerList.length; i += 1) {
       const eachCourse = gradeContainerList[i];
-      console.log('Hallo');
-      if (eachCourse.childNodes.length < 10) continue;
+      if (eachCourse.childNodes.length < 10) { continue; }
       const courseCode = eachCourse.childNodes[0].innerText;
       const courseName = eachCourse.childNodes[1].innerText;
       const courseCredits = eachCourse.childNodes[2].innerText;
@@ -51,7 +48,6 @@ function main() {
         grade: courseGrade,
         credits: courseCredits,
       };
-      // console.log("Course added");
       coursesArray.push(newCourse);
     }
     /** Remove any keys earlier and set new keys in extension storage */
@@ -73,7 +69,7 @@ function main() {
   browser.runtime.onMessage.addListener((message) => {
     if (message.command === 'fetch-gpa') {
       getGradesData();
-    } else if (message.command == 'fetch-timetable') {
+    } else if (message.command === 'fetch-timetable') {
       console.log('Not yet implemented');
       // activateTimetable();
     }
