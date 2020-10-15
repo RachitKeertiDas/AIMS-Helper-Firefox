@@ -1,78 +1,82 @@
-
-main();
-
-function main(){
-	/*if(window.hasRun == true)
+function main() {
+  /* if(window.hasRun == true)
 		return;
 	window.hasRun = true;
 	*/
-	let courses_array = [];
-	function getGradesData(){
-		let grade_container_list = document.querySelectorAll(".hierarchyLi.dataLi.tab_body_bg");
-		console.log(grade_container_list);
-		console.log(window.location.href);
-		/**
-		 * Get Student Data from the top of the document
-		 * Wrap it into an object,
-		 * store it into the extension storage
-		 */
-		let student_data_div = document.querySelectorAll(".studentInfoDiv.inlineBlock")[0]
-		let student_name = student_data_div.childNodes[1].innerHTML;
-		let roll_no = student_data_div.childNodes[5].childNodes[3].innerHTML;
-		let branch = student_data_div.childNodes[9].childNodes[1].childNodes[3].innerHTML;
-		let student_type = student_data_div.childNodes[9].childNodes[3].childNodes[3].innerHTML;
-		console.log("Retrieved Student Data")
-		let student_data = {
-			name : student_name,
-			roll_no : roll_no,
-			branch : branch,
-			type : student_type 
-		}
-		console.log(student_data)
-		grade_container_list = document.querySelectorAll(".hierarchyLi.dataLi.tab_body_bg");
-		console.log(grade_container_list);
+  let coursesArray = [];
+  function getGradesData() {
+    let gradeContainerList = document.querySelectorAll(
+      '.hierarchyLi.dataLi.tab_body_bg',
+    );
+    console.log(gradeContainerList);
+    console.log(window.location.href);
+    /**
+     * Get Student Data from the top of the document
+     * Wrap it into an object,
+     * store it into the extension storage
+     */
+    const studentDataDiv = document.querySelectorAll(
+      '.studentInfoDiv.inlineBlock',
+    )[0];
+    const studentName = studentDataDiv.childNodes[1].innerHTML;
+    const rollNo = studentDataDiv.childNodes[5].childNodes[3].innerHTML;
+    const branch = studentDataDiv.childNodes[9].childNodes[1].childNodes[3].innerHTML;
+    const studentType = studentDataDiv.childNodes[9].childNodes[3].childNodes[3].innerHTML;
+    console.log('Retrieved Student Data');
+    const studentData = {
+      name: studentName,
+      rollNo,
+      branch,
+      type: studentType,
+    };
+    console.log(studentData);
+    gradeContainerList = document.querySelectorAll(
+      '.hierarchyLi.dataLi.tab_body_bg',
+    );
+    console.log(gradeContainerList);
 
-		for(let i=0;i<grade_container_list.length;i++){
-			let each_course = grade_container_list[i];
-			console.log("Hallo");
-			if(each_course.childNodes.length < 10)
-				continue;
-			let course_code = each_course.childNodes[0].innerText;
-			let course_name = each_course.childNodes[1].innerText;
-			let course_credits = each_course.childNodes[2].innerText;
-			let course_grade = each_course.childNodes[7].innerText;
-			let course_type =  each_course.childNodes[4].innerText;
-			let new_course = {
-				code : course_code,
-				name : course_name,
-				type : course_type,
-				grade: course_grade,
-				credits: course_credits,
-			}
-			//console.log("Course added");
-			courses_array.push(new_course);
-		}
-		/**Remove any keys earlier and set new keys in extension storage */
-		browser.storage.local.remove('courses_data',function(){
-			
-			browser.storage.local.set({'courses_data': courses_array,'student_data': student_data},function() {
-			console.log("Course Data saved locally")
-			courses_array = [];
-			/**Content script has finished execution, call browser script for further action */
-			browser.runtime.sendMessage({"command":"calculateGPA"})
-		});
-		});
-		console.log("Adding courses successful")
-		console.log(courses_array.length)
-	}
+    for (let i = 0; i < gradeContainerList.length; i++) {
+      const eachCourse = gradeContainerList[i];
+      console.log('Hallo');
+      if (eachCourse.childNodes.length < 10) continue;
+      const courseCode = eachCourse.childNodes[0].innerText;
+      const courseName = eachCourse.childNodes[1].innerText;
+      const courseCredits = eachCourse.childNodes[2].innerText;
+      const courseGrade = eachCourse.childNodes[7].innerText;
+      const courseType = eachCourse.childNodes[4].innerText;
+      const newCourse = {
+        code: courseCode,
+        name: courseName,
+        type: courseType,
+        grade: courseGrade,
+        credits: courseCredits,
+      };
+      // console.log("Course added");
+      coursesArray.push(newCourse);
+    }
+    /** Remove any keys earlier and set new keys in extension storage */
+    browser.storage.local.remove('coursesData', () => {
+      browser.storage.local.set(
+        { coursesData: coursesArray, studentData },
+        () => {
+          console.log('Course Data saved locally');
+          coursesArray = [];
+          /** Content script has finished execution, call browser script for further action */
+          browser.runtime.sendMessage({ command: 'calculateGPA' });
+        },
+      );
+    });
+    console.log('Adding courses successful');
+    console.log(coursesArray.length);
+  }
 
-	browser.runtime.onMessage.addListener((message)=>{
-		if(message.command === "fetch-gpa"){
-			getGradesData();
-		} else if (message.command == "fetch-timetable"){
-			console.log("Not yet implemented")
-			//activateTimetable();
-		}
-	})
-
+  browser.runtime.onMessage.addListener((message) => {
+    if (message.command === 'fetch-gpa') {
+      getGradesData();
+    } else if (message.command == 'fetch-timetable') {
+      console.log('Not yet implemented');
+      // activateTimetable();
+    }
+  });
 }
+main();
