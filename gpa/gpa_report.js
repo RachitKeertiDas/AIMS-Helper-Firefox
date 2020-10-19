@@ -26,6 +26,15 @@ const gradeValues = {
   FS: 0,
 };
 
+function createCourseTableRow(eachCourse) {
+  const newRow = document.createElement('tr');
+  newRow.innerHTML = `<td>${eachCourse.code}</td>
+  <td>${eachCourse.name}</td>
+  <td class="credits">${eachCourse.credits}</td>
+  <td class="credits">${eachCourse.grade}</td>`;
+  return newRow;
+}
+
 browser.storage.local.get(['studentData', 'coursesData'], (result) => {
   // inject student data to PDF
   data.name = result.studentData.name;
@@ -42,6 +51,7 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
 
   // now work on calculating CGPA and adding courses to last table
   const coursesArray = [];
+  const AdditionalArray = [];
   let totalCredits = 0;
   let totalGradePoints = 0;
   const courseData = JSON.parse(JSON.stringify(result.coursesData));
@@ -50,32 +60,29 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
     if (a.code > b.code) return 1;
     return 0;
   });
+
   const maxLength = courseData.length;
   for (let i = 0; i < maxLength; i += 1) {
     const eachCourse = courseData[i];
-    if (excludeList.includes(eachCourse.type.trim())) {
-      continue;
-    } else {
-      if (eachCourse.grade.trim() === 'S' || eachCourse.grade.trim() === '') continue;
-
-      totalCredits += parseInt(eachCourse.credits, 10);
-
-      totalGradePoints
-        += gradeValues[eachCourse.grade.trim()] * parseInt(eachCourse.credits, 10);
-      const newRow = document.createElement('tr');
-      newRow.innerHTML = `<td>${eachCourse.code}</td>
-          <td>${eachCourse.name}</td>
-          <td class="credits">${eachCourse.credits}</td>
-          <td class="credits">${eachCourse.grade}</td>`;
-      coursesArray.push(newRow);
+    if (eachCourse.grade.trim() !== '') {
+      if (eachCourse.type.trim() === 'Additional') {
+        const newRow = createCourseTableRow(eachCourse);
+        AdditionalArray.push(newRow);
+      } else if (!excludeList.includes(eachCourse.type.trim())) {
+        if (eachCourse.grade.trim() !== 'S') {
+          totalCredits += parseInt(eachCourse.credits, 10);
+          totalGradePoints
+            += gradeValues[eachCourse.grade.trim()] * parseInt(eachCourse.credits, 10);
+        }
+        const newRow = createCourseTableRow(eachCourse);
+        coursesArray.push(newRow);
+      }
     }
   }
   const cgpa = totalGradePoints / totalCredits;
   console.log(cgpa);
 
-  document.getElementsByClassName('value cgpa')[0].innerText = Number(
-    cgpa.toFixed(2),
-  );
+  document.getElementsByClassName('value cgpa')[0].innerText = Number(cgpa.toFixed(2));
   // do the credit map:= second table
 
   const coursesTypeMap = new Map();
@@ -90,25 +97,34 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
     }
   }
   const summaryTable = document.getElementsByClassName('summary')[0];
-  for (const [type, credits] of coursesTypeMap.entries()) {
+
+  coursesTypeMap.forEach((credits, type) => {
     const row = document.createElement('tr');
     totalCredits += credits;
     row.innerHTML = `<td>${type}</td><td class="credits">${credits}</td>`;
     summaryTable.appendChild(row);
-  }
+  });
 
   const coursesTable = document.getElementsByClassName('courses')[0];
+  const additionalTable = document.getElementsByClassName('additional')[0];
 
-  for (const course of coursesArray) {
+  coursesArray.forEach((course) => {
     coursesTable.appendChild(course);
+  });
+  AdditionalArray.forEach((element) => {
+    additionalTable.appendChild(element);
+  });
+
+  if (AdditionalArray.length === 0) {
+    const additionalHeader = document.getElementsByClassName('additional-header')[0];
+    additionalTable.remove();
+    additionalHeader.remove();
   }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  document
-    .getElementsByClassName('download-pdf')[0]
-    .addEventListener('click', () => {
-      const element = document.getElementsByClassName('report')[0];
-      html2pdf(element);
-    });
+  document.getElementsByClassName('download-pdf')[0].addEventListener('click', () => {
+    const element = document.getElementsByClassName('report')[0];
+    html2pdf(element);
+  });
 });

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>GPA Report</title>
-    <link rel="stylesheet" href="gpa.css">
+    <link rel="stylesheet" href="gpa.css" />
   </head>
   <body>
     <div class="report">
@@ -13,23 +13,23 @@
           <td><label>Name</label></td>
           <td><span class="value name"></span></td>
         </tr>
-          <tr>
-            <td><label>Roll Number</label></td>
-            <td><span class="value rollno"></span></td>
-          </tr>
-          <tr>
-            <td><label>Branch</label></td>
-            <td><span class="value branch"></span></td>
-          </tr>
-          <tr>
-            <td><label>Student Type</label></td>
-            <td><span class="value student-type"></span></td>
-          </tr>
-          <tr>
-            <td><label>CGPA</label></td>
-            <td><span class="value cgpa"></span></td>
-           </tr>
-        </table>
+        <tr>
+          <td><label>Roll Number</label></td>
+          <td><span class="value rollno"></span></td>
+        </tr>
+        <tr>
+          <td><label>Branch</label></td>
+          <td><span class="value branch"></span></td>
+        </tr>
+        <tr>
+          <td><label>Student Type</label></td>
+          <td><span class="value student-type"></span></td>
+        </tr>
+        <tr>
+          <td><label>CGPA</label></td>
+          <td><span class="value cgpa"></span></td>
+        </tr>
+      </table>
       <h1>Summary</h1>
       <table class="summary">
         <tr>
@@ -46,12 +46,19 @@
           <th>Grade</th>
         </tr>
       </table>
+      <h1 class="additional-header">Additional Courses</h1>
+      <table class="additional courses">
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Credits</th>
+          <th>Grade</th>
+        </tr>
+      </table>
     </div>
-    <br/>
+    <br />
     <button class="download-pdf">Download PDF</button>
     <script src="../assets/html2pdf.bundle.min.js"></script>
-    <script src="gpa_report.js">
-      
-    </script>
+    <script src="gpa_report.js"></script>
   </body>
 </html>
