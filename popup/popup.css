@@ -59,7 +59,7 @@ html body {
     width: 30px;
     height: 30px;
     margin:auto;
-    padding-top: 6px;
+    padding-top: 2px;
     animation: spin 2s linear infinite;
   }
   

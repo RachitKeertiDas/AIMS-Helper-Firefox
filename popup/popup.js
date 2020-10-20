@@ -13,11 +13,11 @@ function showLoading() {
   document.querySelectorAll('.button-container')[0].style.display = 'none';
   document.querySelectorAll('#loader')[0].style.display = 'block';
 }
-
+/*
 function removeLoading() {
   document.querySelectorAll('#loader')[0].style.display = 'none';
   document.querySelectorAll('.button-container')[0].style.display = 'flex';
-}
+} */
 
 function listenforClicks() {
   document.addEventListener('click', (e) => {
