@@ -31,8 +31,13 @@ function listenforClicks() {
      */
     function startGPAcalc(tabs) {
       browser.tabs
-        .sendMessage(tabs[0].id, {
-          command: 'fetch-gpa',
+        .executeScript({ file: '/gpa/fetchGPA.js' })
+        .then(() => {
+          browser.tabs
+            .sendMessage(tabs[0].id, {
+              command: 'fetch-gpa',
+            })
+            .catch(reportScriptError);
         })
         .catch(reportScriptError);
     }
@@ -78,9 +83,6 @@ function listenforMessages() {
  * and add a click handler.
  * If we couldn't inject the script, handle the error.
  */
-browser.tabs
-  .executeScript({ file: '/content_scripts/content.js' })
-  .then(listenforClicks)
-  .catch(reportScriptError);
 
+listenforClicks();
 listenforMessages();

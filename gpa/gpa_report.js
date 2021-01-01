@@ -1,7 +1,5 @@
 const data = {};
-data.gpa = 10;
-data.rollNo = 'CS19BTECH11034';
-data.branch = 'Computer Science and Engineering';
+/* global html2pdf */
 
 const excludeList = [
   'Minor core',
@@ -35,7 +33,7 @@ function createCourseTableRow(eachCourse) {
   return newRow;
 }
 
-browser.storage.local.get(['studentData', 'coursesData'], (result) => {
+browser.storage.local.get(['studentData', 'coursesData'], result => {
   // inject student data to PDF
   data.name = result.studentData.name;
   data.gpa = 10;
@@ -71,8 +69,8 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
       } else if (!excludeList.includes(eachCourse.type.trim())) {
         if (eachCourse.grade.trim() !== 'S') {
           totalCredits += parseInt(eachCourse.credits, 10);
-          totalGradePoints
-            += gradeValues[eachCourse.grade.trim()] * parseInt(eachCourse.credits, 10);
+          totalGradePoints +=
+            gradeValues[eachCourse.grade.trim()] * parseInt(eachCourse.credits, 10);
         }
         const newRow = createCourseTableRow(eachCourse);
         coursesArray.push(newRow);
@@ -108,10 +106,10 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
   const coursesTable = document.getElementsByClassName('courses')[0];
   const additionalTable = document.getElementsByClassName('additional')[0];
 
-  coursesArray.forEach((course) => {
+  coursesArray.forEach(course => {
     coursesTable.appendChild(course);
   });
-  AdditionalArray.forEach((element) => {
+  AdditionalArray.forEach(element => {
     additionalTable.appendChild(element);
   });
 
