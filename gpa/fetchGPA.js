@@ -70,12 +70,16 @@ function main() {
       branch,
       type: studentType,
     };
-    addCheckboxes();
+    const checkboxList = document.querySelectorAll('.cgpa_cal_check');
+    if (checkboxList.length === 0) addCheckboxes();
     const gradeContainerList = document.querySelectorAll('.hierarchyLi.dataLi.tab_body_bg');
 
     for (let i = 0; i < gradeContainerList.length; i += 1) {
       const eachCourse = gradeContainerList[i];
       if (eachCourse.childNodes.length > 9) {
+        const courseCheckbox = eachCourse.childNodes[0];
+        let courseStatus = 'unselected';
+        if (courseCheckbox.checked === true) courseStatus = 'selected';
         /**
          * All the indices have to be shifted by 1 to compensate for the added checkbox
          */
@@ -84,14 +88,17 @@ function main() {
         const courseType = eachCourse.childNodes[5].innerText;
         const courseGrade = eachCourse.childNodes[8].innerText.trim();
         const courseCredits = Number(eachCourse.childNodes[3].innerText.trim());
+
+        if (courseGrade === '') courseStatus = 'upcoming';
         const newCourse = {
           code: courseCode,
           name: courseName,
           type: courseType,
           grade: courseGrade,
           credits: courseCredits,
+          status: courseStatus,
         };
-        console.log(newCourse);
+        // console.log(newCourse);
         coursesArray.push(newCourse);
       }
     }

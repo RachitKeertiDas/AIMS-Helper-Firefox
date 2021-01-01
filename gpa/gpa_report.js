@@ -7,7 +7,6 @@ const excludeList = [
   'Honours project',
   'Honours coursework',
   'FCC',
-  'Additional',
   'Audit',
 ];
 
@@ -33,7 +32,7 @@ function createCourseTableRow(eachCourse) {
   return newRow;
 }
 
-browser.storage.local.get(['studentData', 'coursesData'], result => {
+browser.storage.local.get(['studentData', 'coursesData'], (result) => {
   // inject student data to PDF
   data.name = result.studentData.name;
   data.gpa = 10;
@@ -49,7 +48,8 @@ browser.storage.local.get(['studentData', 'coursesData'], result => {
 
   // now work on calculating CGPA and adding courses to last table
   const coursesArray = [];
-  const AdditionalArray = [];
+  const additionalArray = [];
+  const upcomingArray = [];
   let totalCredits = 0;
   let totalGradePoints = 0;
   const courseData = JSON.parse(JSON.stringify(result.coursesData));
@@ -62,19 +62,21 @@ browser.storage.local.get(['studentData', 'coursesData'], result => {
   const maxLength = courseData.length;
   for (let i = 0; i < maxLength; i += 1) {
     const eachCourse = courseData[i];
-    if (eachCourse.grade.trim() !== '') {
-      if (eachCourse.type.trim() === 'Additional') {
-        const newRow = createCourseTableRow(eachCourse);
-        AdditionalArray.push(newRow);
-      } else if (!excludeList.includes(eachCourse.type.trim())) {
-        if (eachCourse.grade.trim() !== 'S') {
-          totalCredits += parseInt(eachCourse.credits, 10);
-          totalGradePoints +=
-            gradeValues[eachCourse.grade.trim()] * parseInt(eachCourse.credits, 10);
-        }
-        const newRow = createCourseTableRow(eachCourse);
-        coursesArray.push(newRow);
+    if (eachCourse.grade.trim() === '' || eachCourse.status === 'upcoming') {
+      const newRow = createCourseTableRow(eachCourse);
+      upcomingArray.push(newRow);
+    } else if (eachCourse.status === 'unselected') {
+      const newRow = createCourseTableRow(eachCourse);
+      additionalArray.push(newRow);
+    } else
+    if (!excludeList.includes(eachCourse.type.trim())) {
+      if (eachCourse.grade.trim() !== 'S') {
+        totalCredits += parseInt(eachCourse.credits, 10);
+        totalGradePoints
+            += gradeValues[eachCourse.grade.trim()] * parseInt(eachCourse.credits, 10);
       }
+      const newRow = createCourseTableRow(eachCourse);
+      coursesArray.push(newRow);
     }
   }
   const cgpa = totalGradePoints / totalCredits;
@@ -105,15 +107,25 @@ browser.storage.local.get(['studentData', 'coursesData'], result => {
 
   const coursesTable = document.getElementsByClassName('courses')[0];
   const additionalTable = document.getElementsByClassName('additional')[0];
+  const upcomingTable = document.getElementsByClassName('upcoming')[0];
 
-  coursesArray.forEach(course => {
+  coursesArray.forEach((course) => {
     coursesTable.appendChild(course);
   });
-  AdditionalArray.forEach(element => {
+  additionalArray.forEach((element) => {
     additionalTable.appendChild(element);
   });
 
-  if (AdditionalArray.length === 0) {
+  upcomingArray.forEach((course) => {
+    upcomingTable.appendChild(course);
+  });
+
+  if (additionalArray.length === 0) {
+    const additionalHeader = document.getElementsByClassName('additional-header')[0];
+    additionalTable.remove();
+    additionalHeader.remove();
+  }
+  if (upcomingArray.length === 0) {
     const additionalHeader = document.getElementsByClassName('additional-header')[0];
     additionalTable.remove();
     additionalHeader.remove();
