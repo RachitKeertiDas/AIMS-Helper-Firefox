@@ -9,6 +9,7 @@ const excludeList = [
   'FCC',
   'Audit',
 ];
+// Additional has to be excluded
 
 const gradeValues = {
   'A+': 10,
@@ -33,7 +34,7 @@ function createCourseTableRow(eachCourse) {
 }
 
 browser.storage.local.get(['studentData', 'coursesData'], (result) => {
-  // inject student data to PDF
+  // inject student data to HTML Page
   data.name = result.studentData.name;
   data.gpa = 10;
   data.rollNo = result.studentData.rollNo;
@@ -68,19 +69,17 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
     } else if (eachCourse.status === 'unselected') {
       const newRow = createCourseTableRow(eachCourse);
       additionalArray.push(newRow);
-    } else
-    if (!excludeList.includes(eachCourse.type.trim())) {
+    } else if (!excludeList.includes(eachCourse.type.trim())) {
       if (eachCourse.grade.trim() !== 'S') {
         totalCredits += parseInt(eachCourse.credits, 10);
-        totalGradePoints
-            += gradeValues[eachCourse.grade.trim()] * parseInt(eachCourse.credits, 10);
+        totalGradePoints += gradeValues[eachCourse.grade.trim()] * parseInt(eachCourse.credits, 10);
       }
       const newRow = createCourseTableRow(eachCourse);
       coursesArray.push(newRow);
     }
   }
   const cgpa = totalGradePoints / totalCredits;
-  console.log(cgpa);
+  //console.log(cgpa);
 
   document.getElementsByClassName('value cgpa')[0].innerText = Number(cgpa.toFixed(2));
   // do the credit map:= second table

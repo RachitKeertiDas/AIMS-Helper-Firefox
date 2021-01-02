@@ -63,7 +63,7 @@ function main() {
     const rollNo = studentDataDiv.childNodes[5].childNodes[3].innerHTML;
     const branch = studentDataDiv.childNodes[9].childNodes[1].childNodes[3].innerHTML;
     const studentType = studentDataDiv.childNodes[9].childNodes[3].childNodes[3].innerHTML;
-    console.log('Retrieved Student Data');
+    // console.log('Retrieved Student Data');
     const studentData = {
       name: studentName,
       rollNo,
@@ -110,7 +110,7 @@ function main() {
         browser.runtime.sendMessage({ command: 'calculateGPA' });
       });
     });
-    console.log('Adding courses successful');
+    // console.log('Adding courses successful');
   }
 
   browser.runtime.onMessage.addListener((message) => {
