@@ -1,72 +1,76 @@
-.heading{
-    text-align: center;
-    width: auto;
-    height: 40px;
-    color: black;
- 	margin-bottom: 0px;
-    text-transform: uppercase;
+.heading {
+  text-align: center;
+  width: auto;
+  height: 40px;
+  color: black;
+  margin-bottom: 0px;
+  text-transform: uppercase;
 }
 
 .heading h5 {
-    font-family: 'Raleway', sans-serif;
-    font-size: 20px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-weight: normal;
-    margin-bottom: 5px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 20px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin-bottom: 5px;
 }
 
 html body {
-	width: 240px;
+  width: 240px;
 }
 .hidden {
-    display: none;
+  display: none;
 }
 
 .button-container {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	height: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 60px;
 }
 
 #loading-image {
-    display: none;
-    margin-left: auto;
-    margin-right: auto;
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .button {
-    margin: 3% auto;
-    padding-top: 6px;
-    text-align: center;
-    font-size: 1.5em;
-    cursor: pointer;
-    border-radius: 5px;
-    font-family: 'Verdana','sans-serif';
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: #dfe4ea;
-    font-size: 20px;
+  margin: 3% auto;
+  padding-top: 6px;
+  text-align: center;
+  font-size: 1.5em;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: 'Verdana', 'sans-serif';
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #dfe4ea;
+  font-size: 20px;
 }
 
 /*courtesy of w3schools.com*/
 #loader {
-    border: 7px solid #f3f3f3; /* Light grey */
-    border-top: 7px solid #3498db; /* Blue */
-    border-bottom: 7px solid #3498db;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    margin:auto;
-    padding-top: 2px;
-    animation: spin 2s linear infinite;
+  border: 7px solid #f3f3f3; /* Light grey */
+  border-top: 7px solid #3498db; /* Blue */
+  border-bottom: 7px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  padding-top: 2px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
   }
+}
 
 /*
 button {

@@ -1,69 +1,75 @@
-      body{
-        text-align: center;
-        font-family: Roboto;
-        font-size: 13px;
-      }
-      .report{
-        display: inline-block;
-        text-align: left;
-        margin-top: 30px;
-        margin-left: 20px;
-      }
-      .personal, .summary{
-        margin-left: 50px;
-        width: 600px;
-        margin-top: 20px;
-      }
-      .courses{
-        margin-left: 50px;
-        width: 600px;
-        margin-top: 20px;
-      }
-      ul{
-        list-style:none;
-        margin-left:0;
-        padding-left:1em;
-        /*text-indent:-1em;*/
-      }
-      h1{
-        color: #552200;
-      }
-      label{
-        padding: 3px 7px;
-        display:inline-block;
-        width: 120px;
-        margin-bottom: 5px;
-      }
-      .courses, .summary, .courses th, .summary th, .courses td, .summary td{
-        border: 2px solid #ff6600;
-        border-collapse: collapse;
-        padding: 3px 10px;
-      }
-      .credits{
-        text-align: center;
-      }
-      .total{
-        font-weight: bold;
-        color: #aa3300;
-      }
-      .exclude{
-        color: #333333;
-      }
-      button {
-        color: #77220a;
-        background-color:#fee;
-        border: 1.2px solid #aa3300;
-        padding-left: 1.5%;
-        padding-right: 1.5%;
-        padding-top: 0.5%;
-        padding-bottom: 0.5%;
-        border-radius: 3px;
-        margin-top: 30px;
-        margin-left: 50px;
-        transition: 0.25s all;
-      }
-      button:hover {
-        color: white;
-        border-color: #552200;
-        background-color: #ff6600;
-      }
+body {
+  text-align: center;
+  font-family: Roboto;
+  font-size: 13px;
+}
+.report {
+  display: inline-block;
+  text-align: left;
+  margin-top: 30px;
+  margin-left: 20px;
+}
+.personal,
+.summary {
+  margin-left: 50px;
+  width: 600px;
+  margin-top: 20px;
+}
+.courses {
+  margin-left: 50px;
+  width: 600px;
+  margin-top: 20px;
+}
+ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 1em;
+  /*text-indent:-1em;*/
+}
+h1 {
+  color: #552200;
+}
+label {
+  padding: 3px 7px;
+  display: inline-block;
+  width: 120px;
+  margin-bottom: 5px;
+}
+.courses,
+.summary,
+.courses th,
+.summary th,
+.courses td,
+.summary td {
+  border: 2px solid #ff6600;
+  border-collapse: collapse;
+  padding: 3px 10px;
+}
+.credits {
+  text-align: center;
+}
+.total {
+  font-weight: bold;
+  color: #aa3300;
+}
+.exclude {
+  color: #333333;
+}
+button {
+  color: #77220a;
+  background-color: #fee;
+  border: 1.2px solid #aa3300;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+  border-radius: 3px;
+  margin-top: 30px;
+  margin-left: 50px;
+  transition: 0.25s all;
+}
+button:hover {
+  color: white;
+  border-color: #552200;
+  background-color: #ff6600;
+}
