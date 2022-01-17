@@ -89,10 +89,10 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
     const eachCourse = courseData[i];
     if (coursesTypeMap.has(eachCourse.type.trim())) {
       let currentNumber = coursesTypeMap.get(eachCourse.type.trim());
-      currentNumber += 1;
+      currentNumber += eachCourse.credits;
       coursesTypeMap.set(eachCourse.type.trim(), currentNumber);
     } else {
-      coursesTypeMap.set(eachCourse.type.trim(), 1);
+      coursesTypeMap.set(eachCourse.type.trim(), eachCourse.credits);
     }
   }
   const summaryTable = document.getElementsByClassName('summary')[0];
