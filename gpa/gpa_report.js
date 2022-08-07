@@ -2,12 +2,12 @@ const data = {};
 /* global html2pdf */
 
 const excludeList = [
-  'Minor core',
-  'Honors core',
-  'Honours project',
-  'Honours coursework',
-  'FCC',
-  'Audit',
+  'minor core',
+  'honors core',
+  'honours project',
+  'honours coursework',
+  'fcc',
+  'audit',
 ];
 // Additional has to be excluded
 
@@ -69,7 +69,7 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
     } else if (eachCourse.status === 'unselected') {
       const newRow = createCourseTableRow(eachCourse);
       additionalArray.push(newRow);
-    } else if (!excludeList.includes(eachCourse.type.trim())) {
+    } else if (!excludeList.includes(eachCourse.type.trim().toLowerCase())) {
       if (eachCourse.grade.trim() !== 'S') {
         totalCredits += parseInt(eachCourse.credits, 10);
         totalGradePoints += gradeValues[eachCourse.grade.trim()] * parseInt(eachCourse.credits, 10);
