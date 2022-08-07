@@ -10,6 +10,10 @@ const excludeList = [
   'audit',
 ];
 // Additional has to be excluded
+const minorList = [
+  'minor core',
+  'minor elective'
+];
 
 const gradeValues = {
   'A+': 10,
@@ -51,6 +55,7 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
   const coursesArray = [];
   const additionalArray = [];
   const upcomingArray = [];
+  const minorArray = [];
   let totalCredits = 0;
   let totalGradePoints = 0;
   const courseData = JSON.parse(JSON.stringify(result.coursesData));
@@ -66,10 +71,17 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
     if (eachCourse.grade.trim() === '' || eachCourse.status === 'upcoming') {
       const newRow = createCourseTableRow(eachCourse);
       upcomingArray.push(newRow);
+
     } else if (eachCourse.status === 'unselected') {
       const newRow = createCourseTableRow(eachCourse);
       additionalArray.push(newRow);
-    } else if (!excludeList.includes(eachCourse.type.trim().toLowerCase())) {
+      
+    } else if (minorList.includes(eachCourse.type.trim().toLowerCase())) {
+      const newRow = createCourseTableRow(eachCourse);
+      minorArray.push(newRow);
+
+    }
+      else if (!excludeList.includes(eachCourse.type.trim().toLowerCase())) {
       if (eachCourse.grade.trim() !== 'S') {
         totalCredits += parseInt(eachCourse.credits, 10);
         totalGradePoints += gradeValues[eachCourse.grade.trim()] * parseInt(eachCourse.credits, 10);
@@ -107,6 +119,7 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
   const coursesTable = document.getElementsByClassName('courses')[0];
   const additionalTable = document.getElementsByClassName('additional')[0];
   const upcomingTable = document.getElementsByClassName('upcoming')[0];
+  const minorTable = document.getElementsByClassName('minor')[0];
 
   coursesArray.forEach((course) => {
     coursesTable.appendChild(course);
@@ -119,15 +132,25 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
     upcomingTable.appendChild(course);
   });
 
+  minorArray.forEach((course) => {
+    minorTable.appendChild(course);
+  });
+
   if (additionalArray.length === 0) {
     const additionalHeader = document.getElementsByClassName('additional-header')[0];
     additionalTable.remove();
     additionalHeader.remove();
   }
   if (upcomingArray.length === 0) {
-    const additionalHeader = document.getElementsByClassName('additional-header')[0];
-    additionalTable.remove();
-    additionalHeader.remove();
+    const upcomingHeader = document.getElementsByClassName('upcoming-header')[0];
+    upcomingTable.remove();
+    upcomingHeader.remove();
+  }
+
+  if (minorArray.length === 0) {
+    const minorHeader = document.getElementsByClassName('minor-header')[0];
+    minorTable.remove();
+    minorHeader.remove();
   }
 });
 
