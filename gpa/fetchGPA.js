@@ -12,7 +12,6 @@ function main() {
     parent.before(checkbox);
   };
   const excludeList = [
-    'Minor core',
     'Honors core',
     'Honours project',
     'Honours coursework',

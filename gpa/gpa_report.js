@@ -2,7 +2,6 @@ const data = {};
 /* global html2pdf */
 
 const excludeList = [
-  'minor core',
   'honors core',
   'honours project',
   'honours coursework',
@@ -10,6 +9,8 @@ const excludeList = [
   'audit',
 ];
 // Additional has to be excluded
+// This is to ensure ticked additional courses
+// get displayed in updated reports
 const minorList = [
   'minor core',
   'minor elective'
