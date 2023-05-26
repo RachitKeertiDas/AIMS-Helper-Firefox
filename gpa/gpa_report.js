@@ -112,10 +112,13 @@ browser.storage.local.get(['studentData', 'coursesData'], (result) => {
 
   coursesTypeMap.forEach((credits, type) => {
     const row = document.createElement('tr');
-    totalCredits += credits;
     row.innerHTML = `<td>${type}</td><td class="credits">${credits}</td>`;
     summaryTable.appendChild(row);
   });
+
+  const totalRow = document.createElement('tr');
+  totalRow.innerHTML = `<td><b>Total</b></td><td class='credits'><b>${totalCredits}</b></td>`;
+  summaryTable.appendChild(totalRow);
 
   const coursesTable = document.getElementsByClassName('courses')[0];
   const additionalTable = document.getElementsByClassName('additional')[0];
