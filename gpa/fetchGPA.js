@@ -87,6 +87,8 @@ function main() {
         const courseType = eachCourse.childNodes[5].innerText;
         const courseGrade = eachCourse.childNodes[8].innerText.trim();
         const courseCredits = Number(eachCourse.childNodes[3].innerText.trim());
+		const courseSemester = eachCourse.parentNode.firstChild.firstChild.innerText.trim();
+		console.log(courseSemester);
 
         if (courseGrade === '') courseStatus = 'upcoming';
         const newCourse = {
@@ -96,8 +98,9 @@ function main() {
           grade: courseGrade,
           credits: courseCredits,
           status: courseStatus,
+		  semester: courseSemester,
         };
-        // console.log(newCourse);
+        console.log(newCourse);
         coursesArray.push(newCourse);
       }
     }

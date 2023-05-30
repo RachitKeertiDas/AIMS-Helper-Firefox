@@ -33,6 +33,7 @@ function createCourseTableRow(eachCourse) {
   const newRow = document.createElement('tr');
   newRow.innerHTML = `<td>${eachCourse.code}</td>
   <td>${eachCourse.name}</td>
+  <td class="credits">${eachCourse.semester}</td>
   <td class="credits">${eachCourse.credits}</td>
   <td class="credits">${eachCourse.grade}</td>`;
   return newRow;
