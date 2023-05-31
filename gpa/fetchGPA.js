@@ -11,6 +11,36 @@ function main() {
     else checkbox.checked = false;
     parent.before(checkbox);
   };
+  const appendSelectionCheckbox = (element) => {
+    const checkbox = document.createElement('input');
+    checkbox.className = 'sem_sel_check';
+    checkbox.type = 'checkbox';
+    checkbox.checked = true;
+
+    checkbox.addEventListener('change',function(){
+      console.log(this.checked);
+      const semHeaderList = this.parentElement.parentElement.parentElement;
+      const checkboxList = semHeaderList.querySelectorAll('.cgpa_cal_check');
+      if(this.checked){
+        /* select all courses in that semester which should be selected by default. */
+        checkboxList.forEach((each) => {
+          each.checked = true;
+          const type = each.parentNode.children[5].innerText.trim();
+          const grade = each.parentNode.children[8].innerText.trim();
+          if (excludeList.indexOf(type) > -1 || grade === '' || grade === 'I') {
+            /* If Course is incomplete, hasn't finished or is to be excluded */
+            each.checked = false;
+          }
+        });
+      } else {
+        /* unselect all courses in that semester */
+        checkboxList.forEach((each) => {
+          each.checked = false;
+        });
+      }
+    })
+    element.after(checkbox);
+  }
   const excludeList = [
     'Honors core',
     'Honours project',
@@ -48,6 +78,12 @@ function main() {
       }
       appendCheckbox(eachCourse.childNodes[0], isChecked);
     });
+    
+    const semMarkers = document.querySelectorAll('.hierarchyLi.dataLi.hierarchyHdr.changeHdrCls.tab_body_bg');
+    semMarkers.forEach((eachSem)=>{
+      const insertionElement = eachSem.lastChild.firstChild;
+      appendSelectionCheckbox(insertionElement);
+    })
   };
 
   let coursesArray = [];
@@ -87,8 +123,8 @@ function main() {
         const courseType = eachCourse.childNodes[5].innerText;
         const courseGrade = eachCourse.childNodes[8].innerText.trim();
         const courseCredits = Number(eachCourse.childNodes[3].innerText.trim());
-		const courseSemester = eachCourse.parentNode.firstChild.firstChild.innerText.trim();
-		console.log(courseSemester);
+		    const courseSemester = eachCourse.parentNode.firstChild.firstChild.innerText.trim();
+		    //console.log(courseSemester);
 
         if (courseGrade === '') courseStatus = 'upcoming';
         const newCourse = {
@@ -98,9 +134,9 @@ function main() {
           grade: courseGrade,
           credits: courseCredits,
           status: courseStatus,
-		  semester: courseSemester,
+          semester: courseSemester,
         };
-        console.log(newCourse);
+        //console.log(newCourse);
         coursesArray.push(newCourse);
       }
     }
